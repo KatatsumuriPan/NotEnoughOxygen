@@ -5,8 +5,7 @@ import kpan.not_enough_oxygen.asm.core.adapters.InjectInstructionsAdapter;
 import kpan.not_enough_oxygen.asm.core.adapters.Instructions;
 import kpan.not_enough_oxygen.asm.core.adapters.MixinAccessorAdapter;
 import kpan.not_enough_oxygen.asm.core.adapters.MyClassVisitor;
-import kpan.not_enough_oxygen.asm.tf.TF_FontRenderer;
-import kpan.not_enough_oxygen.asm.tf.TF_TileEntityFurnace;
+import kpan.not_enough_oxygen.asm.tf.TF_GuiCreateWorld;
 import kpan.not_enough_oxygen.util.ListUtil;
 import kpan.not_enough_oxygen.util.ReflectionUtil;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -42,8 +41,7 @@ public class AsmTransformer implements IClassTransformer {
             ClassVisitor cv = cw;
             cv = rearrangeThisAfterDeobfuscation(cv, transformedName);
             cv = MixinAccessorAdapter.transformAccessor(cv, transformedName);
-            cv = TF_FontRenderer.appendVisitor(cv, transformedName);
-            cv = TF_TileEntityFurnace.appendVisitor(cv, transformedName);
+            cv = TF_GuiCreateWorld.appendVisitor(cv, transformedName);
 
             if (cv == cw)
                 return bytes;
