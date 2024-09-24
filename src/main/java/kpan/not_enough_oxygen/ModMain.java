@@ -1,5 +1,7 @@
 package kpan.not_enough_oxygen;
 
+import kpan.not_enough_oxygen.config.core.ConfigHandler;
+import kpan.not_enough_oxygen.config.ConfigHolder;
 import kpan.not_enough_oxygen.proxy.CommonProxy;
 import kpan.not_enough_oxygen.util.handlers.RegistryHandler;
 import net.minecraft.server.MinecraftServer;
@@ -21,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 //.langをちゃんと使うのを推奨
 
 @Mod(modid = ModTagsGenerated.MODID, version = ModTagsGenerated.VERSION, name = ModTagsGenerated.MODNAME, acceptedMinecraftVersions = "[1.12.2]"
+		, guiFactory = ModTagsGenerated.MODGROUP + ".config.ModGuiFactory"
 		, dependencies = ""
 		, acceptableRemoteVersions = ModTagsGenerated.VERSION_MAJOR + "." + ModTagsGenerated.VERSION_MINOR
 //
@@ -35,9 +38,11 @@ public class ModMain {
 	
 	@Nullable
 	public static MinecraftServer server = null;
+	public static final ConfigHandler defaultConfig = new ConfigHandler(ConfigHolder.class, ModTagsGenerated.MODID, ConfigHolder.getVersion(), ConfigHolder::updateVersion);
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
+		defaultConfig.preInit(event);
 		RegistryHandler.preInitRegistries(event);
 	}
 
