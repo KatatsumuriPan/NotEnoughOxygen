@@ -4,6 +4,7 @@ import kpan.not_enough_oxygen.block.BlockBase;
 import kpan.not_enough_oxygen.block.BlockInit;
 import kpan.not_enough_oxygen.item.ItemInit;
 import kpan.not_enough_oxygen.ModMain;
+import kpan.not_enough_oxygen.network.MyPacketHandler;
 import kpan.not_enough_oxygen.util.interfaces.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -22,6 +23,7 @@ public class RegistryHandler {
 	}
 
 	public static void initRegistries() {
+		MyPacketHandler.registerMessages();
 	}
 
 	public static void postInitRegistries() {
