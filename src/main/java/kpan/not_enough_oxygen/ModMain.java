@@ -1,7 +1,7 @@
 package kpan.not_enough_oxygen;
 
-import kpan.not_enough_oxygen.config.core.ConfigHandler;
 import kpan.not_enough_oxygen.config.ConfigHolder;
+import kpan.not_enough_oxygen.config.core.ConfigHandler;
 import kpan.not_enough_oxygen.proxy.CommonProxy;
 import kpan.not_enough_oxygen.util.handlers.RegistryHandler;
 import net.minecraft.server.MinecraftServer;
@@ -18,50 +18,50 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
-//文字コードをMS932にすると日本語ベタ打ちしたものがゲーム時に文字化けしないが
-//色々と問題があるので
+// 文字コードをMS932にすると日本語ベタ打ちしたものがゲーム時に文字化けしないが
+// 色々と問題があるので
 //.langをちゃんと使うのを推奨
 
 @Mod(modid = ModTagsGenerated.MODID, version = ModTagsGenerated.VERSION, name = ModTagsGenerated.MODNAME, acceptedMinecraftVersions = "[1.12.2]"
-		, guiFactory = ModTagsGenerated.MODGROUP + ".config.ModGuiFactory"
-		, dependencies = ""
-		, acceptableRemoteVersions = ModTagsGenerated.VERSION_MAJOR + "." + ModTagsGenerated.VERSION_MINOR
+        , guiFactory = ModTagsGenerated.MODGROUP + ".config.ModGuiFactory"
+        , dependencies = ""
+        , acceptableRemoteVersions = ModTagsGenerated.VERSION_MAJOR + "." + ModTagsGenerated.VERSION_MINOR
 //
 //, serverSideOnly = true //サーバーのみにする場合に必要(acceptableRemoteVersionsを*に変えないとダメ)、デバッグ時はオフにする
 )
 public class ModMain {
 
-	@SidedProxy(clientSide = ModReference.CLIENT_PROXY_CLASS, serverSide = ModReference.COMMON_PROXY_CLASS)
-	public static CommonProxy proxy;
+    @SidedProxy(clientSide = ModReference.CLIENT_PROXY_CLASS, serverSide = ModReference.COMMON_PROXY_CLASS)
+    public static CommonProxy proxy;
 
-	public static final Logger LOGGER = LogManager.getLogger(ModTagsGenerated.MODNAME);
-	
-	@Nullable
-	public static MinecraftServer server = null;
-	public static final ConfigHandler defaultConfig = new ConfigHandler(ConfigHolder.class, ModTagsGenerated.MODID, ConfigHolder.getVersion(), ConfigHolder::updateVersion);
+    public static final Logger LOGGER = LogManager.getLogger(ModTagsGenerated.MODNAME);
 
-	@EventHandler
-	public static void preInit(FMLPreInitializationEvent event) {
-		defaultConfig.preInit(event);
-		RegistryHandler.preInitRegistries(event);
-	}
+    @Nullable
+    public static MinecraftServer server = null;
+    public static final ConfigHandler defaultConfig = new ConfigHandler(ConfigHolder.class, ModTagsGenerated.MODID, ConfigHolder.getVersion(), ConfigHolder::updateVersion);
 
-	@EventHandler
-	public static void init(FMLInitializationEvent event) { RegistryHandler.initRegistries(); }
+    @EventHandler
+    public static void preInit(FMLPreInitializationEvent event) {
+        defaultConfig.preInit(event);
+        RegistryHandler.preInitRegistries(event);
+    }
 
-	@EventHandler
-	public static void postInit(FMLPostInitializationEvent event) { RegistryHandler.postInitRegistries(); }
+    @EventHandler
+    public static void init(FMLInitializationEvent event) { RegistryHandler.initRegistries(); }
 
-	@EventHandler
-	public static void serverInit(FMLServerStartingEvent event) { RegistryHandler.serverRegistries(event); }
+    @EventHandler
+    public static void postInit(FMLPostInitializationEvent event) { RegistryHandler.postInitRegistries(); }
 
-	@EventHandler
-	public static void onServerAboutToStart(FMLServerAboutToStartEvent event) {
-		server = event.getServer();
-	}
-	
-	@EventHandler
-	public static void onServerStopped(FMLServerStoppedEvent event) {
-		server = null;
-	}
+    @EventHandler
+    public static void serverInit(FMLServerStartingEvent event) { RegistryHandler.serverRegistries(event); }
+
+    @EventHandler
+    public static void onServerAboutToStart(FMLServerAboutToStartEvent event) {
+        server = event.getServer();
+    }
+
+    @EventHandler
+    public static void onServerStopped(FMLServerStoppedEvent event) {
+        server = null;
+    }
 }
