@@ -1,4 +1,5 @@
-[{
+[
+  {
     "modid": "${modid}",
     "name": "${modname}",
     "description": "The air is not included.",
@@ -8,5 +9,6 @@
     "url": "",
     "authorList": ["Katatsumuri.pan"],
     "credits": "",
-    "dependencies": []
-}]
+    "dependencies": ["geckolib3"]
+  }
+]

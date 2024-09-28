@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.GeckoLib;
 
 // 文字コードをMS932にすると日本語ベタ打ちしたものがゲーム時に文字化けしないが
 // 色々と問題があるので
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Mod(modid = ModTagsGenerated.MODID, version = ModTagsGenerated.VERSION, name = ModTagsGenerated.MODNAME, acceptedMinecraftVersions = "[1.12.2]"
         , guiFactory = ModTagsGenerated.MODGROUP + ".config.ModGuiFactory"
-        , dependencies = ""
+        , dependencies = "required-after:geckolib3@[3.0,);"
         , acceptableRemoteVersions = ModTagsGenerated.VERSION_MAJOR + "." + ModTagsGenerated.VERSION_MINOR
 //
 //, serverSideOnly = true //サーバーのみにする場合に必要(acceptableRemoteVersionsを*に変えないとダメ)、デバッグ時はオフにする
@@ -39,6 +40,10 @@ public class ModMain {
     @Nullable
     public static MinecraftServer server = null;
     public static final ConfigHandler defaultConfig = new ConfigHandler(ConfigHolder.class, ModTagsGenerated.MODID, ConfigHolder.getVersion(), ConfigHolder::updateVersion);
+
+    public ModMain() {
+        GeckoLib.initialize();
+    }
 
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event) {

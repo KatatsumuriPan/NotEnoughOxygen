@@ -2,6 +2,10 @@ package kpan.not_enough_oxygen.world;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import kpan.not_enough_oxygen.block.BlockInit;
+import kpan.not_enough_oxygen.client.particle.emitter_block.BlockParticleManager;
+import kpan.not_enough_oxygen.client.particle.emitter_block.OxyliteParticleEmitter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
@@ -9,6 +13,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
@@ -72,37 +77,91 @@ public class NEOChunkGenerator implements IChunkGenerator {
         if (!isInGameChunk(chunkX, chunkZ))
             return;
 
-        // spawn
-        {
-            BlockPos spawnPoint = ((NEOWorldProvider) world.provider).getSpawnPoint1();
-            int spawnX = spawnPoint.getX();
-            int spawnY = spawnPoint.getY();
-            int spawnZ = spawnPoint.getZ();
-            for (int x = -3; x <= 3; x++) {
-                for (int z = -3; z <= 3; z++) {
-                    placeBlock(chunkX, chunkZ, spawnX + x, spawnY - 1, spawnZ + z, Blocks.STONEBRICK.getDefaultState());
-                    for (int y = 0; y <= 4; y++) {
-                        if (Math.max(Math.abs(x), Math.abs(z)) + y < 6)
-                            placeBlock(chunkX, chunkZ, spawnX + x, spawnY + y, spawnZ + z, Blocks.AIR.getDefaultState());
-                    }
-                }
-            }
-            placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 0, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX + 2, spawnY + 0, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 1, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX + 2, spawnY + 1, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 2, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX + 2, spawnY + 2, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX - 1, spawnY + 3, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX + 1, spawnY + 3, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX, spawnY + 3, spawnZ, Blocks.GLOWSTONE.getDefaultState());
-            placeBlock(chunkX, chunkZ, spawnX - 2, spawnY, spawnZ + 1, Blocks.CHEST.getDefaultState());
-            if (placeBlock(chunkX, chunkZ, spawnX - 3, spawnY, spawnZ + 1, Blocks.CHEST.getDefaultState())) {
-                if (world.getTileEntity(new BlockPos(spawnX - 3, spawnY, spawnZ + 1)) instanceof TileEntityChest tileentity) {
-                    tileentity.setInventorySlotContents(0, new ItemStack(Items.BREAD, 10));
-                }
-            }
+        generateSpawn(chunkX, chunkZ);
+    }
+    private void generateSpawn(int chunkX, int chunkZ) {
+        BlockPos spawnPoint = ((NEOWorldProvider) world.provider).getSpawnPoint1();
+        int spawnX = spawnPoint.getX();
+        int spawnY = spawnPoint.getY();
+        int spawnZ = spawnPoint.getZ();
 
+
+        // 床
+        for (int x = -6; x <= 6; x++) {
+            for (int z = -6; z <= 6; z++) {
+                if (Math.max(Math.abs(x), Math.abs(z)) <= 3)
+                    placeBlock(chunkX, chunkZ, spawnX + x, spawnY - 1, spawnZ + z, Blocks.STONEBRICK.getDefaultState());
+                else
+                    placeBlock(chunkX, chunkZ, spawnX + x, spawnY - 1, spawnZ + z, Blocks.STONE.getDefaultState());
+            }
+        }
+        // 高さ0~2
+        for (int x = -6; x <= 6; x++) {
+            for (int z = -6; z <= 6; z++) {
+                for (int y = 0; y <= 2; y++) {
+                    if (Math.max(Math.abs(x), Math.abs(z)) <= 3)
+                        placeBlock(chunkX, chunkZ, spawnX + x, spawnY + y, spawnZ + z, Blocks.AIR.getDefaultState());
+                    else
+                        placeBlock(chunkX, chunkZ, spawnX + x, spawnY + y, spawnZ + z, Blocks.STONE.getDefaultState());
+                }
+            }
+        }
+        // 高さ3
+        for (int x = -5; x <= 5; x++) {
+            for (int z = -5; z <= 5; z++) {
+                if (Math.max(Math.abs(x), Math.abs(z)) <= 2)
+                    placeBlock(chunkX, chunkZ, spawnX + x, spawnY + 3, spawnZ + z, Blocks.AIR.getDefaultState());
+                else
+                    placeBlock(chunkX, chunkZ, spawnX + x, spawnY + 3, spawnZ + z, Blocks.STONE.getDefaultState());
+            }
+        }
+        // 高さ4~5
+        for (int x = -4; x <= 4; x++) {
+            for (int z = -4; z <= 4; z++) {
+                placeBlock(chunkX, chunkZ, spawnX + x, spawnY + 4, spawnZ + z, Blocks.STONE.getDefaultState());
+                if (Math.max(Math.abs(x), Math.abs(z)) <= 2)
+                    placeBlock(chunkX, chunkZ, spawnX + x, spawnY + 5, spawnZ + z, Blocks.STONE.getDefaultState());
+            }
+        }
+
+        Random random = new Random(world.getSeed());
+        // 石の置換
+        placeBlockNearSpawn(chunkX, chunkZ, Blocks.DIRT.getDefaultState(), spawnX, spawnY, spawnZ, 1.2, 3, random);
+        placeBlockNearSpawn(chunkX, chunkZ, Blocks.DIRT.getDefaultState(), spawnX, spawnY, spawnZ, 1.5, 5, random);
+        placeBlockNearSpawn(chunkX, chunkZ, Blocks.DIRT.getDefaultState(), spawnX, spawnY, spawnZ, 2, 3, random);
+        placeBlockNearSpawn(chunkX, chunkZ, Blocks.WOOL.getStateFromMeta(13), spawnX, spawnY, spawnZ, 1.2, 3, random);
+        placeBlockNearSpawn(chunkX, chunkZ, Blocks.WOOL.getStateFromMeta(13), spawnX, spawnY, spawnZ, 1.2, 3, random);
+        placeBlockNearSpawn(chunkX, chunkZ, Blocks.IRON_ORE.getDefaultState(), spawnX, spawnY, spawnZ, 1, 2.5, random);
+
+        // オキシライト
+        placeBlock(chunkX, chunkZ, spawnX - 1, spawnY + 3, spawnZ - 3, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 0, spawnY + 3, spawnZ - 3, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 4, spawnZ - 3, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 1, spawnY + 4, spawnZ - 3, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 0, spawnY + 4, spawnZ - 3, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 4, spawnZ - 4, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 1, spawnY + 4, spawnZ - 4, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 0, spawnY + 4, spawnZ - 4, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 1, spawnY + 5, spawnZ - 3, BlockInit.OXYLITE.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 0, spawnY + 5, spawnZ - 3, BlockInit.OXYLITE.getDefaultState());
+
+        // ゲート
+        placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 0, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX + 2, spawnY + 0, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 1, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX + 2, spawnY + 1, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 2, spawnY + 2, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX + 2, spawnY + 2, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX - 1, spawnY + 3, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX + 1, spawnY + 3, spawnZ, Blocks.QUARTZ_BLOCK.getDefaultState());
+        placeBlock(chunkX, chunkZ, spawnX, spawnY + 3, spawnZ, Blocks.GLOWSTONE.getDefaultState());
+
+        // チェスト
+        placeBlock(chunkX, chunkZ, spawnX - 2, spawnY, spawnZ + 1, Blocks.CHEST.getDefaultState());
+        if (placeBlock(chunkX, chunkZ, spawnX - 3, spawnY, spawnZ + 1, Blocks.CHEST.getDefaultState())) {
+            if (world.getTileEntity(new BlockPos(spawnX - 3, spawnY, spawnZ + 1)) instanceof TileEntityChest tileentity) {
+                tileentity.setInventorySlotContents(0, new ItemStack(Items.BREAD, 10));
+            }
         }
     }
 
@@ -110,9 +169,29 @@ public class NEOChunkGenerator implements IChunkGenerator {
     private boolean placeBlock(int chunkX, int chunkZ, int blockPosX, int blockPosY, int blockPosZ, IBlockState state) {
         if (blockPosX >> 4 == chunkX && blockPosZ >> 4 == chunkZ) {
             world.setBlockState(new BlockPos(blockPosX, blockPosY, blockPosZ), state, 2);
+            if (state.getBlock() == BlockInit.OXYLITE)
+                BlockParticleManager.particles.add(new OxyliteParticleEmitter(new BlockPos(blockPosX, blockPosY, blockPosZ)));
             return true;
         }
         return false;
+    }
+
+    private void placeBlockNearSpawn(int chunkX, int chunkZ, IBlockState state, int spawnX, int spawnY, int spawnZ, double rMin, double rMax, Random random) {
+        double x = spawnX + random.nextDouble() * 10 - 5;
+        double y = spawnY + random.nextDouble() * 10 - 5;
+        double z = spawnZ + random.nextDouble() * 10 - 5;
+        double r = random.nextDouble() * (rMax - rMin) + rMin;
+        for (int ix = (int) -r; ix <= (int) r; ix++) {
+            for (int iz = (int) -r; iz <= (int) r; iz++) {
+                for (int iy = (int) -r; iy <= (int) r; iy++) {
+                    if (new Vec3d(x + ix, y + iy, z + iz).squareDistanceTo(new Vec3d(x, y, z)) - (Math.abs(ix) + Math.abs(iy) + Math.abs(iz)) * 0.3 > r * r)
+                        continue;
+                    if (world.getBlockState(new BlockPos((int) (x + ix), (int) (y + iy), (int) (z + iz))) == Blocks.STONE.getDefaultState()) {
+                        placeBlock(chunkX, chunkZ, (int) (x + ix), (int) (y + iy), (int) (z + iz), state);
+                    }
+                }
+            }
+        }
     }
 
     @Override

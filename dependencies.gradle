@@ -38,5 +38,5 @@
  * For more details, see https://docs.gradle.org/8.4/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-
+    api rfg.deobf("curse.maven:geckolib-388172:4020277")
 }
