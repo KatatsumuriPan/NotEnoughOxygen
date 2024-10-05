@@ -6,9 +6,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.chunk.ChunkPrimer;
 
-public class NEOBiome extends Biome {
+public class NEODummyBiome extends Biome {
 
-    public NEOBiome() {
+    public NEODummyBiome() {
         super(new BiomeProperties(NEOWorldRegisterer.DIMENSION_NAME)
                 .setBaseHeight(1.0F)
                 .setHeightVariation(0.2F)

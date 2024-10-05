@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockHorizontalBase extends BlockBase {
-    public static final PropertyDirection FACING = BlockHorizontal.FACING;
+    public static final PropertyDirection HORIZONTAL_FACING = BlockHorizontal.FACING;
 
     public BlockHorizontalBase(String name, Material material) {
         super(name, material);
@@ -46,25 +46,25 @@ public class BlockHorizontalBase extends BlockBase {
     @Override
     protected ArrayList<IProperty<?>> getProperties() {
         ArrayList<IProperty<?>> properties = super.getProperties();
-        properties.add(FACING);
+        properties.add(HORIZONTAL_FACING);
         return properties;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
         IBlockState state = super.getStateFromMeta(meta);
-        state.withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
+        state.withProperty(HORIZONTAL_FACING, EnumFacing.byHorizontalIndex(meta));
         return state;
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(FACING).getHorizontalIndex();
+        return state.getValue(HORIZONTAL_FACING).getHorizontalIndex();
     }
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+        return getDefaultState().withProperty(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite());
     }
 
 }

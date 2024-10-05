@@ -23,7 +23,7 @@ public class NEOWorldType extends WorldType {
     public BiomeProvider getBiomeProvider(World world) {
         if (world.provider.getDimensionType() != NEOWorldRegisterer.DIMENSION_TYPE)
             return new BiomeProviderSingle(Biomes.VOID);
-        return new BiomeProviderSingle(ModBiomes.cloud);
+        return new BiomeProviderSingle(ModBiomes.DUMMY);
     }
 
     @Override

@@ -6,14 +6,18 @@ import java.util.Random;
 import kpan.not_enough_oxygen.block.BlockInit;
 import kpan.not_enough_oxygen.client.particle.emitter_block.BlockParticleManager;
 import kpan.not_enough_oxygen.client.particle.emitter_block.OxyliteParticleEmitter;
+import kpan.not_enough_oxygen.neo_world.NEO3DBiomeProvider;
+import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
@@ -24,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class NEOChunkGenerator implements IChunkGenerator {
 
+    private final NEO3DBiomeProvider biomeProvider;
+
     public static boolean isInGameChunk(int chunkX, int chunkZ) {
         return 0 <= chunkX && chunkX < NEOWorldProvider.WORLD_SIZE && 0 <= chunkZ && chunkZ < NEOWorldProvider.WORLD_SIZE;
     }
@@ -32,7 +38,10 @@ public class NEOChunkGenerator implements IChunkGenerator {
 
     private final ChunkPrimer chunkPrimer = new ChunkPrimer();
 
-    public NEOChunkGenerator(World world) { this.world = world; }
+    public NEOChunkGenerator(World world) {
+        this.world = world;
+        biomeProvider = new NEO3DBiomeProvider(new Vec3i(NEOWorldProvider.WORLD_SIZE * 16, 256, NEOWorldProvider.WORLD_SIZE * 16), new Vec3i(24, 24, 24));
+    }
 
     private void setBlocksInChunk(int chunkX, int chunkZ) {
         if (isInGameChunk(chunkX, chunkZ)) {
@@ -60,16 +69,37 @@ public class NEOChunkGenerator implements IChunkGenerator {
     @Override
     public Chunk generateChunk(int chunkX, int chunkZ) {
         setBlocksInChunk(chunkX, chunkZ);
+        placeBiomeBlocks(chunkX, chunkZ);
 
         Chunk chunk = new Chunk(world, chunkPrimer, chunkX, chunkZ);
         byte[] abyte = chunk.getBiomeArray();
 
         for (int i = 0; i < abyte.length; ++i) {
-            abyte[i] = (byte) Biome.getIdForBiome(ModBiomes.cloud);
+            abyte[i] = (byte) Biome.getIdForBiome(ModBiomes.DUMMY);
         }
 
         chunk.generateSkylightMap();
         return chunk;
+    }
+
+    private void placeBiomeBlocks(int chunkX, int chunkZ) {
+        if (!isInGameChunk(chunkX, chunkZ))
+            return;
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                for (int y = 0; y < 256; y++) {
+                    if (chunkPrimer.getBlockState(x, y, z) == Blocks.BEDROCK.getDefaultState())
+                        continue;
+                    byte biome = biomeProvider.getBiome(x + chunkX * 16, y, z + chunkZ * 16);
+                    IBlockState state;
+                    if (biome < 16)
+                        state = Blocks.STAINED_GLASS.getDefaultState().withProperty(BlockStainedGlass.COLOR, EnumDyeColor.byMetadata(biome % 16));
+                    else
+                        state = Blocks.WOOL.getDefaultState().withProperty(BlockStainedGlass.COLOR, EnumDyeColor.byMetadata(biome % 16));
+                    chunkPrimer.setBlockState(x, y, z, state);
+                }
+            }
+        }
     }
 
     @Override

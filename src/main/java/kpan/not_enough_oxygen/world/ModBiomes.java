@@ -15,7 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 @ObjectHolder(ModTagsGenerated.MODID)
 public class ModBiomes {
     // instantiate Biomes
-    public final static NEOBiome cloud = null;
+    public final static NEODummyBiome DUMMY = null;
 
     @Mod.EventBusSubscriber(modid = ModTagsGenerated.MODID)
     public static class RegistrationHandler {
@@ -30,7 +30,7 @@ public class ModBiomes {
 
             System.out.println("Registering biomes");
 
-            registry.register(new NEOBiome().setRegistryName(ModTagsGenerated.MODID, NEOWorldRegisterer.DIMENSION_NAME));
+            registry.register(new NEODummyBiome().setRegistryName(ModTagsGenerated.MODID, NEOWorldRegisterer.DIMENSION_NAME));
         }
     }
 
@@ -39,6 +39,6 @@ public class ModBiomes {
      * because it must happen after object handler injection.
      */
     public static void initBiomeManagerAndDictionary() {
-        BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(cloud, 10));
+        BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(DUMMY, 10));
     }
 }

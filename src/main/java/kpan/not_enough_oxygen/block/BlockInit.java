@@ -9,6 +9,6 @@ public class BlockInit {
     public static final ArrayList<BlockBase> BLOCKS = new ArrayList<>();
 
     public static final BlockBase OXYLITE = new BlockBase("oxylite", Material.ROCK);
-    public static final BlockBase COAL_GENERATOR = new BlockCoalGenerator();
+    public static final BlockCoalGenerator COAL_GENERATOR = new BlockCoalGenerator();
 
 }
