@@ -841,7 +841,8 @@ public class BlockMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T>
         }
 
         default boolean onBlockActivated(World worldIn, BlockPos fillerPos, IBlockState fillerState, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ, BlockMultiBlockFiller<T> filler) {
-            return ((Block) this).onBlockActivated(worldIn, fillerPos, fillerState, playerIn, hand, facing, hitX, hitY, hitZ);
+            BlockPos sourcePos = filler.getSourcePos(fillerState, worldIn, fillerPos);
+            return ((Block) this).onBlockActivated(worldIn, sourcePos, worldIn.getBlockState(sourcePos), playerIn, hand, facing, hitX, hitY, hitZ);
         }
 
         default void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn, BlockMultiBlockFiller<T> filler) {

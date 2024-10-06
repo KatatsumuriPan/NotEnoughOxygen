@@ -5,9 +5,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 
-public abstract class TileEntityContainer extends TileEntityMultiBlockBase implements IInventory {
+public abstract class TileEntityContainer extends TileEntity implements IInventory {
 
     protected NonNullList<ItemStack> itemStackList;// finalにできないのはreadFromNBTがあるから
 

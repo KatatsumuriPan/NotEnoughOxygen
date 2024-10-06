@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface IHasTileEntityAndRenderer<T extends TileEntity> extends IHasTileEntity<T> {
+public interface IHasTESR<T extends TileEntity> extends IHasTileEntity<T> {
 
     @SideOnly(Side.CLIENT)
     TileEntitySpecialRenderer<T> getTESR();

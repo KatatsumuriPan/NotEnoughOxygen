@@ -3,12 +3,13 @@ package kpan.not_enough_oxygen.block;
 import com.google.common.collect.AbstractIterator;
 import java.util.ArrayList;
 import java.util.List;
-import kpan.not_enough_oxygen.block.tileentity.TileEntityMultiBlockBase;
-import kpan.not_enough_oxygen.util.interfaces.block.IHasTileEntityAndRenderer;
+import kpan.not_enough_oxygen.block.tileentity.ITileEntityMultiBlockBase;
+import kpan.not_enough_oxygen.util.interfaces.block.IHasTESR;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BlockMultiBlockBase<T extends TileEntityMultiBlockBase> extends BlockHorizontalBase implements IHasTileEntityAndRenderer<T>, BlockMultiBlockFiller.IHasMultiBlockFiller<BlockMultiBlockBase<T>>, IWireConnectable {
+public abstract class BlockMultiBlockBase<T extends TileEntity & ITileEntityMultiBlockBase> extends BlockHorizontalBase implements IHasTESR<T>, BlockMultiBlockFiller.IHasMultiBlockFiller<BlockMultiBlockBase<T>>, IWireConnectable {
 
     public final BlockMultiBlockFiller<BlockMultiBlockBase<T>> filler;
 
@@ -207,7 +208,7 @@ public abstract class BlockMultiBlockBase<T extends TileEntityMultiBlockBase> ex
     // tileentity
     @Override
     @Nullable
-    public abstract TileEntityMultiBlockBase createNewTileEntity(World worldIn, int meta);
+    public abstract TileEntity createNewTileEntity(World worldIn, int meta);
 
     // TESR
     @Override

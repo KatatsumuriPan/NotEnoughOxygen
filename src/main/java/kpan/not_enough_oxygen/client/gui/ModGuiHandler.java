@@ -1,30 +1,32 @@
 package kpan.not_enough_oxygen.client.gui;
 
+import kpan.not_enough_oxygen.block.gui.GuiCoalGenerator;
+import kpan.not_enough_oxygen.block.tileentity.container.ContainerCoalGenerator;
+import kpan.not_enough_oxygen.block.tileentity.container.ContainerTileInventory;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.IntHashMap;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
 
 public class ModGuiHandler implements IGuiHandler {
 
+    private static int nextGuiId = 1;
     private static final IntHashMap<ContainerFactory> CONTAINER_FACTORIES = new IntHashMap<>();
     private static final IntHashMap<GuiFactory> GUI_FACTORIES = new IntHashMap<>();
 
+    public static int newId() { return nextGuiId++; }
 
-    public static void registerContainers() {
-
+    @SideOnly(Side.CLIENT)
+    public static void registerGuis() {
+        registerGui(ContainerCoalGenerator.ID, GuiCoalGenerator::new);
     }
 
-
-    private static void registerContainer(int id, ContainerFactory factory) {
-        CONTAINER_FACTORIES.addKey(id, factory);
-    }
-
-    private static void registerGui(int id, GuiFactory factory) {
-        GUI_FACTORIES.addKey(id, factory);
+    public ModGuiHandler() {
+        registerContainer(ContainerCoalGenerator.ID, ContainerCoalGenerator::new);
     }
 
     // Containerを取得
@@ -39,16 +41,25 @@ public class ModGuiHandler implements IGuiHandler {
     @Nullable
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        GuiFactory factory = GUI_FACTORIES.lookup(ID);
-        return factory != null ? factory.createGui(player, world, x, y, z) : null;
+        ContainerFactory containerFactory = CONTAINER_FACTORIES.lookup(ID);
+        GuiFactory guiFactory = GUI_FACTORIES.lookup(ID);
+        return containerFactory != null && guiFactory != null ? guiFactory.createGui(containerFactory.createContainer(player, world, x, y, z)) : null;
+    }
+
+    private static void registerContainer(int id, ContainerFactory factory) {
+        CONTAINER_FACTORIES.addKey(id, factory);
+    }
+
+    private static void registerGui(int id, GuiFactory factory) {
+        GUI_FACTORIES.addKey(id, factory);
     }
 
     public interface ContainerFactory {
-        Container createContainer(EntityPlayer player, World world, int x, int y, int z);
+        ContainerTileInventory<?> createContainer(EntityPlayer player, World world, int x, int y, int z);
     }
 
     public interface GuiFactory {
-        GuiScreen createGui(EntityPlayer player, World world, int x, int y, int z);
+        GuiScreen createGui(ContainerTileInventory<?> container);
     }
 
 }

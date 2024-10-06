@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import kpan.not_enough_oxygen.ModTagsGenerated;
+import kpan.not_enough_oxygen.block.item.ItemBlockAnimating;
+import kpan.not_enough_oxygen.block.item.renderer.ItemCoalGeneratorRenderer;
 import kpan.not_enough_oxygen.block.tileentity.TileEntityCoalGenerator;
-import kpan.not_enough_oxygen.block.tileentity.TileEntityMultiBlockBase;
 import kpan.not_enough_oxygen.block.tileentity.renderer.CoalGeneratorRenderer;
 import kpan.not_enough_oxygen.client.gui.ModGuis;
+import kpan.not_enough_oxygen.item.ItemInit;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -54,9 +58,8 @@ public class BlockCoalGenerator extends BlockMultiBlockBase<TileEntityCoalGenera
         return true;
     }
 
+
     // property
-
-
     @Override
     protected ArrayList<IProperty<?>> getProperties() {
         ArrayList<IProperty<?>> properties = super.getProperties();
@@ -103,7 +106,7 @@ public class BlockCoalGenerator extends BlockMultiBlockBase<TileEntityCoalGenera
     // tileentity
     @Nullable
     @Override
-    public TileEntityMultiBlockBase createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityCoalGenerator();
     }
     @Override
@@ -125,5 +128,21 @@ public class BlockCoalGenerator extends BlockMultiBlockBase<TileEntityCoalGenera
             playerIn.openGui(ModTagsGenerated.MODID, ModGuis.GUI_ID_COAL_GENERATOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
+    }
+
+    // BlockBase
+    @Override
+    public String getInventoryItemStateName(int itemMeta) {
+        return "inventory";
+    }
+    @Override
+    public void registerAsItem() {
+        ItemInit.ITEMS.add(new ItemBlockAnimating(this) {
+            @SideOnly(Side.CLIENT)
+            @Override
+            public TileEntityItemStackRenderer getTEISR() {
+                return new ItemCoalGeneratorRenderer();
+            }
+        }.setRegistryName(getRegistryName()));
     }
 }

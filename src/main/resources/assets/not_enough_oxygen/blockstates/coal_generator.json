@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "inventory": {
+      "model": "not_enough_oxygen:coal_generator"
+    }
+  }
+}

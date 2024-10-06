@@ -1,38 +1,32 @@
 package kpan.not_enough_oxygen.block.gui;
 
+import kpan.not_enough_oxygen.ModTagsGenerated;
 import kpan.not_enough_oxygen.block.tileentity.TileEntityCoalGenerator;
 import kpan.not_enough_oxygen.block.tileentity.container.ContainerCoalGenerator;
+import kpan.not_enough_oxygen.block.tileentity.container.ContainerTileInventory;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class GuiCoalGenerator extends GuiContainer {
 
-    private static final ResourceLocation FURNACE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/furnace.png");
+    private static final ResourceLocation GUI_TEXTURES = new ResourceLocation(ModTagsGenerated.MODID, "textures/gui/container/coal_generator.png");
 
-    public GuiCoalGenerator(EntityPlayer player, World world, int x, int y, int z) {
-        this(player.inventory, (TileEntityCoalGenerator) world.getTileEntity(new BlockPos(x, y, z)));
-    }
-
-    public GuiCoalGenerator(InventoryPlayer playerInventory, TileEntityCoalGenerator tileInventory) {
-        super(new ContainerCoalGenerator(playerInventory, tileInventory));
+    public GuiCoalGenerator(ContainerTileInventory<?> inventorySlotsIn) {
+        super((ContainerCoalGenerator) inventorySlotsIn);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.getTextureManager().bindTexture(FURNACE_GUI_TEXTURES);
+        mc.getTextureManager().bindTexture(GUI_TEXTURES);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
 
         if (getTileEntity().isBurning()) {
             int h = getBurnLeftScaled(13);
-            drawTexturedModalRect(x + 56, y + 36 + 12 - h, 176, 12 - h, 14, h + 1);
+            drawTexturedModalRect(x + 56, y + 25 + 12 - h, 176, 12 - h, 14, h + 1);
         }
     }
 

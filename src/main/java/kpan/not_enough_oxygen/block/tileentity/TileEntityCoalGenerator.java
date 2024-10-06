@@ -21,7 +21,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class TileEntityCoalGenerator extends TileEntityContainer implements ITickable, IInteractionObject {
+public class TileEntityCoalGenerator extends TileEntityContainer implements ITickable, IInteractionObject, IAnimatable, ITileEntityMultiBlockBase {
 
     // protected static final AnimationBuilder DEPLOY = new AnimationBuilder().addAnimation("animation.coalGenerator.stopped", true).addAnimation("misc.idle", true);
 
@@ -72,7 +72,10 @@ public class TileEntityCoalGenerator extends TileEntityContainer implements ITic
         }
 
         if (dirty) {
+            TileEntity tileEntity = world.getTileEntity(pos);
             world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockCoalGenerator.RUNNING, isBurning()));
+            tileEntity.validate();
+            world.setTileEntity(pos, tileEntity);
             markDirty();
         }
     }
