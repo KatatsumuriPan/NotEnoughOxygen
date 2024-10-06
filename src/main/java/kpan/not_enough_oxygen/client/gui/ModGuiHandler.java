@@ -14,10 +14,16 @@ public class ModGuiHandler implements IGuiHandler {
     private static final IntHashMap<GuiFactory> GUI_FACTORIES = new IntHashMap<>();
 
 
-    public static void registerContainer(int id, ContainerFactory factory) {
+    public static void registerContainers() {
+
+    }
+
+
+    private static void registerContainer(int id, ContainerFactory factory) {
         CONTAINER_FACTORIES.addKey(id, factory);
     }
-    public static void registerGui(int id, GuiFactory factory) {
+
+    private static void registerGui(int id, GuiFactory factory) {
         GUI_FACTORIES.addKey(id, factory);
     }
 

@@ -4,12 +4,19 @@ import kpan.not_enough_oxygen.block.tileentity.TileEntityCoalGenerator;
 import kpan.not_enough_oxygen.block.tileentity.container.ContainerCoalGenerator;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class GuiCoalGenerator extends GuiContainer {
 
     private static final ResourceLocation FURNACE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/furnace.png");
+
+    public GuiCoalGenerator(EntityPlayer player, World world, int x, int y, int z) {
+        this(player.inventory, (TileEntityCoalGenerator) world.getTileEntity(new BlockPos(x, y, z)));
+    }
 
     public GuiCoalGenerator(InventoryPlayer playerInventory, TileEntityCoalGenerator tileInventory) {
         super(new ContainerCoalGenerator(playerInventory, tileInventory));

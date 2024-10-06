@@ -45,7 +45,7 @@ import net.minecraftforge.common.IPlantable;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class BlockMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T>> extends BlockBase {
+public class BlockMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T> & IWireConnectable> extends BlockBase implements IWireConnectable {
 
     public static final PropertyDirection FACING = BlockDirectional.FACING;
     public static final PropertyBool SOURCE_LOST = PropertyBool.create("source_lost");
@@ -80,6 +80,15 @@ public class BlockMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T>
     @Override
     public int getMetaFromState(IBlockState state) {
         return getFacing(state).getIndex() | (state.getValue(SOURCE_LOST) ? 8 : 0);
+    }
+
+    // IWireConnectable
+    @Override
+    public boolean canConnect(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing facing) {
+        BlockPos sourcePos = getSourcePos(state, world, pos);
+        if (sourcePos == null)
+            return false;
+        return sourceBlock.canConnectToFiller(world, sourcePos, pos, facing);
     }
 
     // util
@@ -719,7 +728,10 @@ public class BlockMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T>
         }
     }
 
-    public interface IHasMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T>> {
+
+    public interface IHasMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T> & IWireConnectable> {
+
+        boolean canConnectToFiller(IBlockAccess world, BlockPos pos, BlockPos fillerPos, EnumFacing facing);
 
         default MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos, BlockMultiBlockFiller<T> filler) {
             return ((Block) this).getMapColor(state, worldIn, pos);
@@ -828,8 +840,8 @@ public class BlockMultiBlockFiller<T extends BlockBase & IHasMultiBlockFiller<T>
             return ((Block) this).canPlaceBlockAt(worldIn, pos);
         }
 
-        default boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ, BlockMultiBlockFiller<T> filler) {
-            return ((Block) this).onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+        default boolean onBlockActivated(World worldIn, BlockPos fillerPos, IBlockState fillerState, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ, BlockMultiBlockFiller<T> filler) {
+            return ((Block) this).onBlockActivated(worldIn, fillerPos, fillerState, playerIn, hand, facing, hitX, hitY, hitZ);
         }
 
         default void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn, BlockMultiBlockFiller<T> filler) {

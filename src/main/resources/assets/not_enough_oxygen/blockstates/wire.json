@@ -1,0 +1,807 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "model": "straight",
+        "north": "joint",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jj"
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "north": "plug",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jp"
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "north": "joint",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jp",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "north": "plug",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_pp"
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "east": "joint",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jj",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "east": "plug",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jp",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "east": "joint",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jp",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "east": "plug",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_pp",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "up": "joint",
+        "down": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jj",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "up": "plug",
+        "down": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jp",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "up": "joint",
+        "down": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_jp",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "model": "straight",
+        "up": "plug",
+        "down": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_straight_pp",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "north": "joint",
+        "east": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj"
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "east": "joint",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "south": "joint",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "west": "joint",
+        "north": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "east": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "north": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "east": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "north": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jj",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "north": "plug",
+        "east": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj"
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "east": "plug",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "south": "plug",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "west": "plug",
+        "north": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "east": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "north": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "east": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "north": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pj",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "north": "joint",
+        "east": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp"
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "east": "joint",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "south": "joint",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "west": "joint",
+        "north": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "east": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "joint",
+        "north": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "east": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "joint",
+        "north": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_jp",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "north": "plug",
+        "east": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp"
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "east": "plug",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "south": "plug",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "west": "plug",
+        "north": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "east": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "down": "plug",
+        "north": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "east": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "corner",
+        "up": "plug",
+        "north": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_corner_pp",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "multi"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_core"
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "north": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_j"
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "east": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_j",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "south": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_j",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "west": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_j",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "down": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_j",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "up": "joint"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_j",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "north": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_p"
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "east": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_p",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "south": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_p",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "west": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_p",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "down": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_p",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "model": "multi",
+        "up": "plug"
+      },
+      "apply": {
+        "model": "not_enough_oxygen:wire_p",
+        "x": 270
+      }
+    }
+  ]
+}

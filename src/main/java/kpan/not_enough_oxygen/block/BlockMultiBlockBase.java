@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BlockMultiBlockBase<T extends TileEntityMultiBlockBase> extends BlockHorizontalBase implements IHasTileEntityAndRenderer<T>, BlockMultiBlockFiller.IHasMultiBlockFiller<BlockMultiBlockBase<T>> {
+public abstract class BlockMultiBlockBase<T extends TileEntityMultiBlockBase> extends BlockHorizontalBase implements IHasTileEntityAndRenderer<T>, BlockMultiBlockFiller.IHasMultiBlockFiller<BlockMultiBlockBase<T>>, IWireConnectable {
 
     public final BlockMultiBlockFiller<BlockMultiBlockBase<T>> filler;
 
@@ -43,7 +43,6 @@ public abstract class BlockMultiBlockBase<T extends TileEntityMultiBlockBase> ex
     public boolean isFullCube(IBlockState state) {
         return false;
     }
-
 
     @Override
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {

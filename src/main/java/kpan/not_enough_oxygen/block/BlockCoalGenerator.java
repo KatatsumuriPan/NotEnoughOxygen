@@ -18,6 +18,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,10 +32,26 @@ public class BlockCoalGenerator extends BlockMultiBlockBase<TileEntityCoalGenera
     public static final AxisAlignedBB COLLISION_LEG_R_BB = new AxisAlignedBB(-15 / 16D, 0 / 16D, 13 / 16D, -9 / 16D, 12 / 16D, 19 / 16D);
     public static final AxisAlignedBB COLLISION_INDICATOR_BB = new AxisAlignedBB(25 / 16D, 24 / 16D, 12 / 16D, 31 / 16D, 48 / 16D, 17 / 16D);
     public static final AxisAlignedBB COLLISION_PIPE_BB = new AxisAlignedBB(-15 / 16D, 30 / 16D, 13 / 16D, -9 / 16D, 42 / 16D, 19 / 16D);
+    public static final AxisAlignedBB COLLISION_OUT_PANEL_BB = new AxisAlignedBB(1 / 16D, 1 / 16D, 31 / 16D, 15 / 16D, 15 / 16D, 32 / 16D);
 
     public BlockCoalGenerator() {
         super("coal_generator", Material.ROCK);
         setDefaultState(getDefaultState().withProperty(RUNNING, false));
+    }
+    @Override
+    public boolean canConnect(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing facing) {
+        return false;
+    }
+    @Override
+    public boolean canConnectToFiller(IBlockAccess world, BlockPos pos, BlockPos fillerPos, EnumFacing facing) {
+
+        IBlockState state = world.getBlockState(pos);
+        EnumFacing opposite = state.getValue(HORIZONTAL_FACING).getOpposite();
+        if (facing != opposite)
+            return false;
+        if (!pos.offset(opposite).equals(fillerPos))
+            return false;
+        return true;
     }
 
     // property
@@ -68,7 +85,19 @@ public class BlockCoalGenerator extends BlockMultiBlockBase<TileEntityCoalGenera
     }
     @Override
     protected List<AxisAlignedBB> getCollisionBBList(IBlockState blockState, World worldIn, BlockPos pos) {
-        return Arrays.asList(COLLISION_BB, COLLISION_LEG_L_BB, COLLISION_LEG_R_BB, COLLISION_INDICATOR_BB, COLLISION_PIPE_BB);
+        return Arrays.asList(COLLISION_BB, COLLISION_LEG_L_BB, COLLISION_LEG_R_BB, COLLISION_INDICATOR_BB, COLLISION_PIPE_BB, COLLISION_OUT_PANEL_BB);
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos fillerPos, IBlockState fillerState, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ, BlockMultiBlockFiller<BlockMultiBlockBase<TileEntityCoalGenerator>> filler) {
+        BlockPos sourcePos = filler.getSourcePos(fillerState, worldIn, fillerPos);
+        EnumFacing sourceFacing = worldIn.getBlockState(sourcePos).getValue(HORIZONTAL_FACING);
+        if (facing == sourceFacing.getOpposite() && fillerPos.equals(sourcePos.offset(sourceFacing.getOpposite()))) {
+            // 電力出力パネル
+            // if (((ItemBlock) playerIn.getHeldItem(hand).getItem()).getBlock() == BlockInit.WIRE)
+            return false;
+        }
+        return super.onBlockActivated(worldIn, fillerPos, fillerState, playerIn, hand, facing, hitX, hitY, hitZ, filler);
     }
 
     // tileentity
