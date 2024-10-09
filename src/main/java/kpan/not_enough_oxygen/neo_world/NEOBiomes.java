@@ -24,14 +24,14 @@ public class NEOBiomes {
             res.add(0.1F, BlockElementSolid.get(Elements.ALGAE).getDefaultState());
             res.add(0.2F, BlockElementSolid.get(Elements.COAL).getDefaultState());
             res.add(0.3F, BlockElementSolid.get(Elements.COPPER_ORE).getDefaultState());
-            res.add(0.7F, BlockElementSolid.get(Elements.SANDSTONE).getDefaultState());
-            res.add(0.3F, BlockElementSolid.get(Elements.COPPER_ORE).getDefaultState());
-            res.add(0.4F, BlockElementSolid.get(Elements.DIRT).getDefaultState());
+            res.add(0.8F, BlockElementSolid.get(Elements.SANDSTONE).getDefaultState());
+            res.add(0.3F, BlockElementSolid.get(Elements.ALGAE).getDefaultState());
+            res.add(0.3F, BlockElementSolid.get(Elements.DIRT).getDefaultState());
             res.add(0.65F, BlockElementSolid.get(Elements.SANDSTONE).getDefaultState());
             res.add(0.2F, BlockElementSolid.get(Elements.DIRT).getDefaultState());
             res.add(0.1F, BlockElementSolid.get(Elements.COAL).getDefaultState());
             res.add(0.1F, BlockElementSolid.get(Elements.SAND).getDefaultState());
-            res.add(0.1F, BlockElementSolid.get(Elements.ALGAE).getDefaultState());
+            res.add(0.1F, BlockElementSolid.get(Elements.DIRT).getDefaultState());
             res.add(0.2F, BlockElementSolid.get(Elements.COPPER_ORE).getDefaultState());
             res.add(0.1F, BlockElementSolid.get(Elements.COAL).getDefaultState());
             res.add(0.1F, BlockElementSolid.get(Elements.ALGAE).getDefaultState());
