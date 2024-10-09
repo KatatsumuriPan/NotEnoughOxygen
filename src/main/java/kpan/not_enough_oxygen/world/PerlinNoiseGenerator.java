@@ -25,6 +25,10 @@ public class PerlinNoiseGenerator {
         yCoord = rand.nextFloat() * 256.0F;
         zCoord = rand.nextFloat() * 256.0F;
 
+        for (int i = 0; i < 256; i++) {
+            permutations[i] = i;
+        }
+
         for (int l = 0; l < 256; ++l) {
             int j = rand.nextInt(256 - l) + l;
             int k = permutations[l];
