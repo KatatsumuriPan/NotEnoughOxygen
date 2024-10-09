@@ -2,7 +2,10 @@ package kpan.not_enough_oxygen.neo_world;
 
 import kpan.not_enough_oxygen.neo_world.ElementData.ElementState;
 import kpan.not_enough_oxygen.neo_world.SimulationFrame.AreaData;
+import kpan.not_enough_oxygen.util.MyNBTUtil;
+import kpan.not_enough_oxygen.util.MyNBTUtil.NBTException;
 import kpan.not_enough_oxygen.world.NEOWorldProvider;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
 public class Simulation {
@@ -11,6 +14,17 @@ public class Simulation {
     private SimulationFrame currentFrame;
     private int queuedTicks = 0;// 読み書きにはlock必須
     private final Object lockObj = new Object();
+
+    public static Simulation fromNBT(NBTTagCompound nbt) {
+        Simulation simulation = new Simulation();
+        try {
+            simulation.state = MyNBTUtil.readEnum(nbt, "state", State.class);
+            simulation.currentFrame = SimulationFrame.fromNBT(nbt.getCompoundTag("currentFrame"));
+            simulation.queuedTicks = MyNBTUtil.readNumberInt(nbt, "queuedTicks");
+        } catch (NBTException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public State getState() {
         return state;
@@ -53,6 +67,7 @@ public class Simulation {
                         while (true) {
                             simulateNextFrame();
                             synchronized (lockObj) {
+                                applyNextFrame();
                                 queuedTicks--;
                                 if (queuedTicks <= 0) {
                                     state = State.READY;
@@ -71,9 +86,23 @@ public class Simulation {
         }
     }
 
+    public NBTTagCompound toNBT() {
+        synchronized (lockObj) {
+            NBTTagCompound nbt = new NBTTagCompound();
+            MyNBTUtil.write(nbt, "state", state);
+            nbt.setTag("currentFrame", currentFrame.toNBT());
+            nbt.setInteger("queuedTicks", queuedTicks);
+            return nbt;
+        }
+    }
+
     private void simulateNextFrame() {
 
         simulateArea(currentFrame);
+
+    }
+
+    private void applyNextFrame() {
 
     }
 

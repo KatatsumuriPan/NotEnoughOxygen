@@ -2,6 +2,7 @@ package kpan.not_enough_oxygen.neo_world;
 
 import java.util.EnumSet;
 import kpan.not_enough_oxygen.neo_world.ElementData.ElementState;
+import net.minecraft.nbt.NBTBase;
 
 public final class Cell {
 
@@ -49,6 +50,7 @@ public final class Cell {
     public boolean canLiquidExist() {
         return element.state != ElementState.SOLID && !effects.contains(EffectFromBuilding.LIQUID_IMPERMEABLE);
     }
+    public NBTBase toNBT() { }
 
     public enum EffectFromBuilding {
         LIQUID_IMPERMEABLE, GAS_IMPERMEABLE

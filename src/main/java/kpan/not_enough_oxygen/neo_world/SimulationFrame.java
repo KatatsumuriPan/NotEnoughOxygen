@@ -7,22 +7,45 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import kpan.not_enough_oxygen.neo_world.ElementData.ElementState;
+import kpan.not_enough_oxygen.util.MyNBTUtil;
+import kpan.not_enough_oxygen.util.MyNBTUtil.NBTException;
 import kpan.not_enough_oxygen.world.NEOWorldProvider;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import org.apache.commons.lang3.NotImplementedException;
 
 public final class SimulationFrame {
-    public final long simulationTick;
+    public long simulationTick;
     public final AreaData areaData;
-    public final EntityData entityData = null;
 
     private SimulationFrame(long simulationTick, AreaData areaData) {
         this.simulationTick = simulationTick;
         this.areaData = areaData;
     }
+    public static SimulationFrame fromNBT(NBTTagCompound nbt) throws NBTException {
+        long simulationTick = MyNBTUtil.readNumberLong(nbt, "simulationTick");
+        AreaData areaData = AreaData.fromNBT(nbt.getCompoundTag("areaData"));
+        return new SimulationFrame(simulationTick, areaData);
+    }
+
+    public NBTTagCompound toNBT() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setLong("simulationTick", simulationTick);
+        nbt.setTag("areaData", areaData.toNBT());
+        return nbt;
+    }
 
     public static final class AreaData {
+
+        public static AreaData fromNBT(NBTTagCompound areaData) {
+            int sizeX;
+            int sizeZ;
+            Cell[] cells;
+            boolean[] explored;
+        }
+
         public final int sizeX;
         public final int sizeZ;
         private final Cell[] cells;
@@ -41,7 +64,6 @@ public final class SimulationFrame {
             this.cells = cells;
             explored = new boolean[cells.length];
         }
-
         public boolean isExplored(int cellIdx) {
             return explored[cellIdx];
         }
@@ -241,6 +263,20 @@ public final class SimulationFrame {
             return (x * sizeZ + z) * NEOWorldProvider.WORLD_HEIGHT + y;
         }
 
+        public NBTTagCompound toNBT() {
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setInteger("sizeX", sizeX);
+            nbt.setInteger("sizeZ", sizeZ);
+            {
+                NBTTagList list = new NBTTagList();
+                for (Cell cell : cells) {
+                    list.appendTag(cell.toNBT());
+                }
+                nbt.setTag("cells", list);
+            }
+            MyNBTUtil.write(nbt, "explored", explored);
+            return nbt;
+        }
     }
 
     public static class BuildingData {

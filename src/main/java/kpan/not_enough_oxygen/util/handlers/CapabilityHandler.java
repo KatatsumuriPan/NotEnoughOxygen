@@ -4,8 +4,8 @@ import java.util.concurrent.Callable;
 import kpan.not_enough_oxygen.capability.IMyCapability;
 import kpan.not_enough_oxygen.capability.ProviderBase;
 import kpan.not_enough_oxygen.capability.StorageBase;
-import kpan.not_enough_oxygen.capability.capabilities.CapabilityCommandBlock;
-import kpan.not_enough_oxygen.capability.capabilities.ICapabilityCommandBlock;
+import kpan.not_enough_oxygen.capability.capabilities.CapabilityWorld;
+import kpan.not_enough_oxygen.capability.capabilities.ICapabilityWorld;
 import kpan.not_enough_oxygen.capability.capabilities.ProviderCommandBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityCommandBlock;
@@ -20,7 +20,7 @@ public class CapabilityHandler {
 
     // call in preInit
     public static void register() {
-        registerCapability(ICapabilityCommandBlock.class, CapabilityCommandBlock::new);
+        registerCapability(ICapabilityWorld.class, CapabilityWorld::new);
     }
 
     // AttachCapabilitiesEventの種類
