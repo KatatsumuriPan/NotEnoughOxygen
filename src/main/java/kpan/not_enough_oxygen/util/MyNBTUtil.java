@@ -1,5 +1,6 @@
 package kpan.not_enough_oxygen.util;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.commons.lang3.EnumUtils;
 
 public class MyNBTUtil {
@@ -200,8 +202,13 @@ public class MyNBTUtil {
         else
             return defaultValue;
     }
-    @Nullable
-    public static Integer readNumberInt(NBTTagCompound compound, String name) {
+    public static int readNumberInt(NBTTagCompound compound, String name) throws NBTException {
+        if (hasKeyNumber(compound, name))
+            return compound.getInteger(name);
+        else
+            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+    }
+    public static Integer tryReadNumberInt(NBTTagCompound compound, String name) {
         if (hasKeyNumber(compound, name))
             return compound.getInteger(name);
         else
@@ -210,6 +217,24 @@ public class MyNBTUtil {
     public static int readNumberInt(NBTTagCompound compound, String name, int defaultValue) {
         if (hasKeyNumber(compound, name))
             return compound.getInteger(name);
+        else
+            return defaultValue;
+    }
+    public static long readNumberLong(NBTTagCompound compound, String name) throws NBTException {
+        if (hasKeyNumber(compound, name))
+            return compound.getLong(name);
+        else
+            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+    }
+    public static Long tryReadNumberLong(NBTTagCompound compound, String name) {
+        if (hasKeyNumber(compound, name))
+            return compound.getLong(name);
+        else
+            return null;
+    }
+    public static long readNumberLong(NBTTagCompound compound, String name, long defaultValue) {
+        if (hasKeyNumber(compound, name))
+            return compound.getLong(name);
         else
             return defaultValue;
     }
@@ -236,9 +261,11 @@ public class MyNBTUtil {
         else
             return defaultValue;
     }
-    @Nullable
-    public static <T extends Enum<T>> T readEnum(NBTTagCompound compound, String name, Class<T> enumType) {
-        return readEnum(compound, name, enumType, null);
+    public static <T extends Enum<T>> T readEnum(NBTTagCompound compound, String name, Class<T> enumType) throws NBTException {
+        T res = readEnum(compound, name, enumType, null);
+        if (res == null)
+            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+        return res;
     }
     public static <T extends Enum<T>> T readEnum(NBTTagCompound compound, String name, Class<T> enumType, T defaultValue) {
         String value = compound.getString(name);
@@ -288,6 +315,9 @@ public class MyNBTUtil {
                 compound.setTag(name, toNBT(entry.getValue()));
             }
             return compound;
+        } else if (object instanceof INBTSerializable<?> serializable) {
+            // 逆が面倒なのでやらない
+            // return serializable.serializeNBT();
         }
         throw new IllegalArgumentException(object + "はNBTに変換できません");
     }
@@ -368,6 +398,14 @@ public class MyNBTUtil {
         compound.setInteger("z", pos.getZ());
         tileEntity.readFromNBT(compound);
         tileEntity.markDirty();
+    }
+
+    public static class NBTException extends Exception {
+        @Serial
+        private static final long serialVersionUID = -2047511212572346871L;
+        public NBTException(String message) {
+            super(message);
+        }
     }
 
     public enum EnumNBTTagType {
