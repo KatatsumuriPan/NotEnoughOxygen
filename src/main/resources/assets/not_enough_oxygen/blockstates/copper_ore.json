@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "not_enough_oxygen:copper_ore"
+    }
+  }
+}

@@ -30,7 +30,7 @@ public class NEOWorldType extends WorldType {
     public IChunkGenerator getChunkGenerator(World world, String generatorOptions) {
         if (world.provider.getDimensionType() != NEOWorldRegisterer.DIMENSION_TYPE)
             return new ChunkGeneratorFlat(world, world.getSeed(), false, "");
-        return new NEOChunkGenerator(world);
+        return new NEOMCChunkGenerator(world);
     }
 
     @Override

@@ -10,8 +10,9 @@ public class NEOWorldProvider extends WorldProvider {
     // 24ブロック四方がだいたい1バイオーム
     public static int WORLD_SIZE = 6;// 6x6
     public static int SPAWN_HEIGHT = 150;
+    public static int WORLD_HEIGHT = 256;
 
-    public BlockPos getSpawnPoint1() {
+    public static BlockPos getSpawnPoint1() {
         return new BlockPos(WORLD_SIZE * 16 / 2, SPAWN_HEIGHT, WORLD_SIZE * 16 / 2);
     }
 
@@ -23,7 +24,7 @@ public class NEOWorldProvider extends WorldProvider {
 
     @Override
     public BlockPos getRandomizedSpawnPoint() {
-        return this.world.getSpawnPoint();
+        return world.getSpawnPoint();
     }
 
     @Override

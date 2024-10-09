@@ -11,9 +11,9 @@ public class WorldHandler {
 
     @SubscribeEvent
     public static void onCreate(WorldEvent.CreateSpawnPosition event) {
-        if (!(event.getWorld().provider instanceof NEOWorldProvider provider))
+        if (!(event.getWorld().provider instanceof NEOWorldProvider))
             return;
-        event.getWorld().getWorldInfo().setSpawn(provider.getSpawnPoint1());
+        event.getWorld().getWorldInfo().setSpawn(NEOWorldProvider.getSpawnPoint1());
         event.setCanceled(true);
     }
 

@@ -1,0 +1,9 @@
+
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "not_enough_oxygen:blocks/solid/clay"
+  }
+}
+
+

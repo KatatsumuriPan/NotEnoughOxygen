@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
-// TODO: Auto-generated Javadoc
 @ObjectHolder(ModTagsGenerated.MODID)
 public class ModBiomes {
     // instantiate Biomes

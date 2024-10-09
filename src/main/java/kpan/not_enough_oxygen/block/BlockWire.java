@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
+import kpan.not_enough_oxygen.creative_tab.ModTabs;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -48,6 +49,7 @@ public class BlockWire extends BlockBase implements IHasMultiCollision {
 
     public BlockWire(String name) {
         super(name, Material.IRON);
+        setCreativeTab(ModTabs.SOLID_POWER);
     }
 
     @Override

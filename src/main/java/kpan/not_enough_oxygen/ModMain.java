@@ -2,6 +2,7 @@ package kpan.not_enough_oxygen;
 
 import kpan.not_enough_oxygen.config.ConfigHolder;
 import kpan.not_enough_oxygen.config.core.ConfigHandler;
+import kpan.not_enough_oxygen.creative_tab.ModTabs;
 import kpan.not_enough_oxygen.proxy.CommonProxy;
 import kpan.not_enough_oxygen.util.handlers.RegistryHandler;
 import net.minecraft.server.MinecraftServer;
@@ -43,6 +44,7 @@ public class ModMain {
 
     public ModMain() {
         GeckoLib.initialize();
+        ModTabs.init();
     }
 
     @EventHandler

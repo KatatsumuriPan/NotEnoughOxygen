@@ -9,6 +9,7 @@ import kpan.not_enough_oxygen.block.item.renderer.ItemCoalGeneratorRenderer;
 import kpan.not_enough_oxygen.block.tileentity.TileEntityCoalGenerator;
 import kpan.not_enough_oxygen.block.tileentity.renderer.CoalGeneratorRenderer;
 import kpan.not_enough_oxygen.client.gui.ModGuis;
+import kpan.not_enough_oxygen.creative_tab.ModTabs;
 import kpan.not_enough_oxygen.item.ItemInit;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -41,6 +42,7 @@ public class BlockCoalGenerator extends BlockMultiBlockBase<TileEntityCoalGenera
     public BlockCoalGenerator() {
         super("coal_generator", Material.ROCK);
         setDefaultState(getDefaultState().withProperty(RUNNING, false));
+        setCreativeTab(ModTabs.SOLID_POWER);
     }
     @Override
     public boolean canConnect(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing facing) {

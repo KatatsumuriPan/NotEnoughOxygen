@@ -1,0 +1,9 @@
+
+{
+  "variants": {
+    "normal": {
+      "model": "not_enough_oxygen:creature"
+    }
+  }
+}
+
