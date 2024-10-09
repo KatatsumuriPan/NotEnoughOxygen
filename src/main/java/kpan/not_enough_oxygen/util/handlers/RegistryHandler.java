@@ -29,6 +29,7 @@ public class RegistryHandler {
 
     public static void preInitRegistries(@SuppressWarnings("unused") FMLPreInitializationEvent event) {
         ModMain.proxy.registerOnlyClient();
+        CapabilityHandler.register();
         NEOWorldRegisterer.registerDimensions();
     }
 
