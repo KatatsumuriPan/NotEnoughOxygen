@@ -15,7 +15,7 @@ public class ElementLiquid extends ElementData<ElementLiquid> {
 
     public ElementLiquid(String name, Color elementColor, float thermalConductivity, float specificHeatCapacity, float molarMass, float viscosity, float minVerticalFlow, float minHorizontalFlow,
                          float maxMass) {
-        super(name, ElementState.SOLID, elementColor, thermalConductivity, specificHeatCapacity);
+        super(name, ElementState.LIQUID, elementColor, thermalConductivity, specificHeatCapacity);
         this.molarMass = molarMass;
         this.viscosity = viscosity;
         this.minVerticalFlow = minVerticalFlow;

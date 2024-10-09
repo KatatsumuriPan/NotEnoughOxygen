@@ -88,16 +88,14 @@ public class Simulation {
             Cell cellReadOnly = areaData.getCellReadOnly(cellIdx);
             ElementData<?> element = cellReadOnly.element;
             switch (element.state) {
-                case VACUUM:
+                case VACUUM -> {
                     // やること無し
-                    break;
-                case SOLID:
+                }
+                case SOLID -> {
                     // TODO:まだやることない
-                    break;
-                case LIQUID:
-                    SimulateLiquid.sim(cellReadOnly, (ElementLiquid) element, cellIdx, areaData);
-                    break;
-                case GAS: {
+                }
+                case LIQUID -> SimulateLiquid.sim(cellReadOnly, (ElementLiquid) element, cellIdx, areaData);
+                case GAS -> {
                     /*
                     // 上
                     int upCellIdx = areaData.getOffsetCellIdx(cellIdx, EnumFacing.UP);
@@ -140,10 +138,6 @@ public class Simulation {
                         break;
 */
                 }
-                break;
-                default:
-                    throw new RuntimeException("INVALID ENUM VALUE:" + element.state);
-
             }
         }
     }

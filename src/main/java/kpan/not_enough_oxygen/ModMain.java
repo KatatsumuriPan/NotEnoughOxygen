@@ -43,7 +43,6 @@ public class ModMain {
     public static final ConfigHandler defaultConfig = new ConfigHandler(ConfigHolder.class, ModTagsGenerated.MODID, ConfigHolder.getVersion(), ConfigHolder::updateVersion);
 
     public ModMain() {
-        GeckoLib.initialize();
         ModTabs.init();
     }
 
@@ -54,7 +53,10 @@ public class ModMain {
     }
 
     @EventHandler
-    public static void init(FMLInitializationEvent event) { RegistryHandler.initRegistries(); }
+    public static void init(FMLInitializationEvent event) {
+        GeckoLib.initialize();
+        RegistryHandler.initRegistries();
+    }
 
     @EventHandler
     public static void postInit(FMLPostInitializationEvent event) { RegistryHandler.postInitRegistries(); }

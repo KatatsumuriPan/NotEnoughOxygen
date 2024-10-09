@@ -3,7 +3,6 @@ package kpan.not_enough_oxygen.world;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.OptionalDouble;
 import java.util.Random;
 import kpan.not_enough_oxygen.neo_world.NEO3DBiomeProvider;
 import kpan.not_enough_oxygen.neo_world.NEOBiomes;
@@ -18,7 +17,6 @@ import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import org.jetbrains.annotations.Nullable;
 
 public class NEOMCChunkGenerator implements IChunkGenerator {
@@ -87,17 +85,13 @@ public class NEOMCChunkGenerator implements IChunkGenerator {
     }
 
     private void placeBiomeBlocks(int chunkX, int chunkZ) {
-        var perlinNoise = new NoiseGeneratorOctaves(new Random(world.getSeed()), 8);
-        double[] noise = perlinNoise.generateNoiseOctaves(null, chunkX * 16, 0, chunkZ * 16, 16, NEOWorldProvider.WORLD_HEIGHT, 16, 10, 10, 10);
-        OptionalDouble min = Arrays.stream(noise).min();
-        OptionalDouble max = Arrays.stream(noise).max();
-        OptionalDouble average = Arrays.stream(noise).average();
-        int a = 9;
+        var perlinNoise = new PerlinNoiseGeneratorOctaves(new Random(world.getSeed()), 8);
+        float[] noise = perlinNoise.generateNoiseOctaves(null, chunkX * 16, 0, chunkZ * 16, 16, NEOWorldProvider.WORLD_HEIGHT, 16, 10, 10, 10);
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = 0; y < NEOWorldProvider.WORLD_HEIGHT; y++) {
                     byte biome = biomeProvider.getBiome(x + chunkX * 16, y, z + chunkZ * 16);
-                    IBlockState state = NEOBiomes.BIOMES.get(biome).getBiomeBlockList().get((float) noise[x << 12 | z << 8 | y] / 440F + 0.5F);
+                    IBlockState state = NEOBiomes.BIOMES.get(biome).getBiomeBlockList().get(noise[x << 12 | z << 8 | y] / 440F + 0.5F);
                     placeBlock(x, y, z, state);
                 }
             }

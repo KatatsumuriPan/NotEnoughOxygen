@@ -8,7 +8,7 @@ public class ElementGas extends ElementData<ElementGas> {
     public final float flowRate;
 
     public ElementGas(String name, Color elementColor, float thermalConductivity, float specificHeatCapacity, float molarMass, float flowRate) {
-        super(name, ElementState.SOLID, elementColor, thermalConductivity, specificHeatCapacity);
+        super(name, ElementState.GAS, elementColor, thermalConductivity, specificHeatCapacity);
         this.molarMass = molarMass;
         this.flowRate = flowRate;
         lightAbsorption(0.2F);

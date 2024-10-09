@@ -23,6 +23,7 @@ public class Elements {
     public static final ElementSolid SANDSTONE = solid("sandstone", new Color(0xFF_FF_FF), 2.9, 0.8, EnumHardness.SOFT).rock(0);
     // naural
     public static final ElementSolid ALGAE = solid("algae", new Color(0xFF_FF_FF), 2, 0.2, EnumHardness.VERY_SOFT);
+    public static final ElementSolid COAL = solid("coal", new Color(0xFF_FF_FF), 1.25, 0.71, EnumHardness.VERY_SOFT).radiationAbsorption(0.84F);
     public static final ElementSolid DIRT = solid("dirt", new Color(0xFF_FF_FF), 2, 1.48, EnumHardness.VERY_SOFT);
     public static final ElementSolid FERTILIZER = solid("fertilizer", new Color(0xFF_FF_FF), 2, 0.83, EnumHardness.VERY_SOFT);
     public static final ElementSolid ICE = solid("ice", new Color(0xFF_FF_FF), 2.18, 2.05, EnumHardness.NORMAL).lightAbsorption(0.33F).radiationAbsorption(0.8F);
@@ -31,7 +32,7 @@ public class Elements {
     // metal_ore
     public static final ElementSolid COPPER_ORE = solid("copper_ore", new Color(0xFF_FF_FF), 4.5, 0.386, EnumHardness.NORMAL).radiationAbsorption(0.56F).metalOre();
     // metal
-    public static final ElementSolid COPPER = solid("copper", new Color(0xFF_FF_FF), 60, 0.385, EnumHardness.NORMAL).radiationAbsorption(0.61F).metal();
+    // public static final ElementSolid COPPER = solid("copper", new Color(0xFF_FF_FF), 60, 0.385, EnumHardness.NORMAL).radiationAbsorption(0.61F).metal();
     // chemical
     public static final ElementSolid GLASS = solid("glass", new Color(0xFF_FF_FF), 1.11, 0.84, EnumHardness.SOFT).lightAbsorption(0.1F);
     // freezed
@@ -45,7 +46,6 @@ public class Elements {
     //	public static final ElementSolid BRICK = solid("brick", new Color(0xFF_FF_FF), 0.62, 0.84, EnumHardness.HARD).radiationAbsorption(0.8F);
     //	public static final ElementSolid BRINE_ICE = solid("brine_ice", new Color(0xFF_FF_FF), 2.18, 3.4, EnumHardness.NORMAL).lightAbsorption(0.33333F).radiationAbsorption(0.8F);
     //	public static final ElementSolid MILK_ICE = solid("milk_ice", new Color(0xFF_FF_FF), 2.18, 3.4, EnumHardness.NORMAL).lightAbsorption(0.33333F).radiationAbsorption(0.8F);
-    //	public static final ElementSolid CARBON = solid("carbon", new Color(0xFF_FF_FF), 1.25, 0.71, EnumHardness.VERY_SOFT).radiationAbsorption(0.84F);
     //	public static final ElementSolid CARBON_FIBRE = solid("carbon_fibre", new Color(0xFF_FF_FF), 0, 0.52, EnumHardness.HARDEST).radiationAbsorption(0.84F);
     //	public static final ElementSolid CEMENT = solid("cement", new Color(0xFF_FF_FF), 8, 1.55, EnumHardness.HARDEST).radiationAbsorption(0.8F);
     //	public static final ElementSolid CEMENT_MIX = solid("cement_mix", new Color(0xFF_FF_FF), 8, 0.52, EnumHardness.SOFT).radiationAbsorption(0.8F);
