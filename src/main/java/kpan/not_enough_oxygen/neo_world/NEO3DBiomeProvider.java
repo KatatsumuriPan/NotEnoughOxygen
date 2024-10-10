@@ -3,6 +3,7 @@ package kpan.not_enough_oxygen.neo_world;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import kpan.not_enough_oxygen.neo_world.biome.NEOBiomes;
 import kpan.not_enough_oxygen.world.NEOWorldProvider;
 import kpan.not_enough_oxygen.world.biome.MVec2f;
 import kpan.not_enough_oxygen.world.biome.MVec3f;

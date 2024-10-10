@@ -4,10 +4,10 @@ import kpan.not_enough_oxygen.capability.ProviderSerializable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 
-public class ProviderCommandBlock extends ProviderSerializable<ICapabilityWorld> {
+public class ProviderWorld extends ProviderSerializable<ICapabilityWorld> {
 
-    public ProviderCommandBlock() {
-        super("commandblock_options");
+    public ProviderWorld() {
+        super("world");
     }
 
     @CapabilityInject(ICapabilityWorld.class)

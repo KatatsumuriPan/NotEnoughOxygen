@@ -30,7 +30,7 @@ public class ElementData<E extends ElementData<E>> {
         this.elementColor = elementColor;
         this.thermalConductivity = thermalConductivity;
         this.specificHeatCapacity = specificHeatCapacity;
-        Elements.ELEMENTS.add(this);
+        Elements.ELEMENTS.put(name, this);
     }
 
     // setter

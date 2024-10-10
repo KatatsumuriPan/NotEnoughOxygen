@@ -3,7 +3,7 @@ package kpan.not_enough_oxygen.item;
 import java.util.Random;
 import kpan.not_enough_oxygen.block.BlockElementSolid;
 import kpan.not_enough_oxygen.neo_world.Elements;
-import kpan.not_enough_oxygen.world.NEOMCChunkGenerator;
+import kpan.not_enough_oxygen.world.NEOChunkGenerator;
 import kpan.not_enough_oxygen.world.NEOWorldProvider;
 import kpan.not_enough_oxygen.world.NEOWorldRegisterer;
 import net.minecraft.block.state.IBlockState;
@@ -70,7 +70,7 @@ public class ItemSaveBook extends ItemBase {
             WorldServer world = server.getWorld(NEOWorldRegisterer.DIMENSION_ID);
             if (world.isChunkGeneratedAt(0, 0))
                 return;
-            ((NEOMCChunkGenerator) world.getChunkProvider().chunkGenerator).generateBiome();
+            ((NEOChunkGenerator) world.getChunkProvider().chunkGenerator).generateBiome();
             for (int cx = 0; cx < NEOWorldProvider.WORLD_SIZE; cx++) {
                 for (int cz = 0; cz < NEOWorldProvider.WORLD_SIZE; cz++) {
                     world.getChunk(cx, cz);
@@ -91,7 +91,7 @@ public class ItemSaveBook extends ItemBase {
         }
 
         private static boolean placeBlock(World world, int x, int y, int z, IBlockState state) {
-            if (!NEOMCChunkGenerator.isInGame(x, y, z))
+            if (!NEOChunkGenerator.isInGame(x, y, z))
                 return false;
             world.setBlockState(mutableBlockPos.setPos(x, y, z), state, 0);
             return true;

@@ -4,8 +4,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import kpan.not_enough_oxygen.block.BlockElement;
+import kpan.not_enough_oxygen.block.BlockElementSolid;
+import kpan.not_enough_oxygen.capability.capabilities.ICapabilityWorld;
+import kpan.not_enough_oxygen.capability.capabilities.ProviderWorld;
+import kpan.not_enough_oxygen.neo_world.Cell;
+import kpan.not_enough_oxygen.neo_world.Elements;
 import kpan.not_enough_oxygen.neo_world.NEO3DBiomeProvider;
-import kpan.not_enough_oxygen.neo_world.NEOBiomes;
+import kpan.not_enough_oxygen.neo_world.SimulationFrame.AreaData;
+import kpan.not_enough_oxygen.neo_world.biome.NEOBiomes;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
@@ -19,7 +26,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import org.jetbrains.annotations.Nullable;
 
-public class NEOMCChunkGenerator implements IChunkGenerator {
+public class NEOChunkGenerator implements IChunkGenerator {
 
     public static boolean isInGameChunk(int chunkX, int chunkZ) {
         return 0 <= chunkX && chunkX < NEOWorldProvider.WORLD_SIZE && 0 <= chunkZ && chunkZ < NEOWorldProvider.WORLD_SIZE;
@@ -37,7 +44,7 @@ public class NEOMCChunkGenerator implements IChunkGenerator {
     private final ChunkPrimer chunkPrimer = new ChunkPrimer();
     private final NEO3DBiomeProvider biomeProvider = new NEO3DBiomeProvider(new Vec3i(NEOWorldProvider.WORLD_SIZE * 16, NEOWorldProvider.WORLD_HEIGHT, NEOWorldProvider.WORLD_SIZE * 16), new Vec3i(20, 20, 20));
 
-    public NEOMCChunkGenerator(World world) {
+    public NEOChunkGenerator(World world) {
         this.world = world;
     }
 
@@ -51,9 +58,7 @@ public class NEOMCChunkGenerator implements IChunkGenerator {
                 for (int z = 0; z < 16; z++) {
                     for (int y = 0; y < NEOWorldProvider.WORLD_HEIGHT; y++) {
                         if (y == 0)
-                            chunkPrimer.setBlockState(x, y, z, Blocks.BEDROCK.getDefaultState());
-                        else
-                            chunkPrimer.setBlockState(x, y, z, Blocks.STONE.getDefaultState());
+                            placeBlock(x, y, z, Cell.INVALID);
                     }
                 }
             }
@@ -102,12 +107,30 @@ public class NEOMCChunkGenerator implements IChunkGenerator {
     public void populate(int chunkX, int chunkZ) { }
 
 
-    private boolean placeBlock(int x, int y, int z, IBlockState state) {
-        if (y < 0)
+    private boolean placeBlock(int x, int y, int z, Cell cell) {
+        if (!NEOChunkGenerator.isInGame(x, y, z))
             return false;
-        if (!NEOMCChunkGenerator.isInGame(x, y, z))
+        if (chunkPrimer.getBlockState(x, y, z).getBlock() instanceof BlockElementSolid solid && solid.element == Elements.NEUTRONIUM)
+            return false;
+        cell = cell.clone();
+        chunkPrimer.setBlockState(x, y, z, BlockElement.toBlockState(cell.element));
+        ICapabilityWorld capability = world.getCapability(ProviderWorld.CAP, null);
+        AreaData areaData = capability.getSimulation().getCurrentFrame().areaData;
+        areaData.setCellForGeneration(x, y, z, cell);
+        return true;
+    }
+
+    @Deprecated
+    private boolean placeBlock(int x, int y, int z, IBlockState state) {
+        if (!NEOChunkGenerator.isInGame(x, y, z))
+            return false;
+        if (chunkPrimer.getBlockState(x, y, z).getBlock() instanceof BlockElementSolid solid && solid.element == Elements.NEUTRONIUM)
             return false;
         chunkPrimer.setBlockState(x, y, z, state);
+        ICapabilityWorld capability = world.getCapability(ProviderWorld.CAP, null);
+        AreaData areaData = capability.getSimulation().getCurrentFrame().areaData;
+        if (state.getBlock() instanceof BlockElementSolid solid)
+            areaData.setCellForGeneration(x, y, z, new Cell(solid.element, 1, 300));
         return true;
     }
 

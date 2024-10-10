@@ -21,6 +21,7 @@ public class Simulation {
             simulation.state = MyNBTUtil.readEnum(nbt, "state", State.class);
             simulation.currentFrame = SimulationFrame.fromNBT(nbt.getCompoundTag("currentFrame"));
             simulation.queuedTicks = MyNBTUtil.readNumberInt(nbt, "queuedTicks");
+            return simulation;
         } catch (NBTException e) {
             throw new RuntimeException(e);
         }
@@ -103,7 +104,7 @@ public class Simulation {
     }
 
     private void applyNextFrame() {
-
+        currentFrame.areaData.applyUpdate();
     }
 
     private static void simulateArea(SimulationFrame currentFrame) {

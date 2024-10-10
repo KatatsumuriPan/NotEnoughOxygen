@@ -9,12 +9,12 @@ import kpan.not_enough_oxygen.neo_world.ElementSolid;
 import kpan.not_enough_oxygen.neo_world.Elements;
 import net.minecraft.block.material.Material;
 
-public class BlockElementSolid extends BlockBase {
+public class BlockElementSolid extends BlockElement<ElementSolid> {
 
     private static final Map<ElementSolid, BlockElementSolid> ELEMENT2SOLID = new HashMap<>();
 
     public static void registerBlocks() {
-        for (ElementData<?> element : Elements.ELEMENTS) {
+        for (ElementData<?> element : Elements.ELEMENTS.values()) {
             if (element.state != ElementState.SOLID)
                 continue;
             BlockElementSolid block = new BlockElementSolid((ElementSolid) element);
@@ -29,11 +29,8 @@ public class BlockElementSolid extends BlockBase {
         return block;
     }
 
-    public final ElementSolid element;
-
     private BlockElementSolid(ElementSolid element) {
-        super(element.name, Material.ROCK);
-        this.element = element;
+        super(element.name, Material.ROCK, element);
         setCreativeTab(ModTabs.SOLID_BLOCKS);
     }
 }

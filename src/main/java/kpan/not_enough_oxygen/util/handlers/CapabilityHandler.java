@@ -6,9 +6,8 @@ import kpan.not_enough_oxygen.capability.ProviderBase;
 import kpan.not_enough_oxygen.capability.StorageBase;
 import kpan.not_enough_oxygen.capability.capabilities.CapabilityWorld;
 import kpan.not_enough_oxygen.capability.capabilities.ICapabilityWorld;
-import kpan.not_enough_oxygen.capability.capabilities.ProviderCommandBlock;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityCommandBlock;
+import kpan.not_enough_oxygen.capability.capabilities.ProviderWorld;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -32,10 +31,8 @@ public class CapabilityHandler {
     // Chunk
 
     @SubscribeEvent
-    public static void attachTileEntityCapability(AttachCapabilitiesEvent<TileEntity> event) {
-        if (event.getObject() instanceof TileEntityCommandBlock) {
-            addCapability(event, new ProviderCommandBlock());
-        }
+    public static void attachWorldCapability(AttachCapabilitiesEvent<World> event) {
+        addCapability(event, new ProviderWorld());
     }
 
     private static <T extends IMyCapability<T>> void registerCapability(Class<T> classType, Callable<? extends T> factory) {

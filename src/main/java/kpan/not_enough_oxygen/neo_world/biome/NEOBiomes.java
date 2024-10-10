@@ -1,8 +1,8 @@
-package kpan.not_enough_oxygen.neo_world;
+package kpan.not_enough_oxygen.neo_world.biome;
 
 import java.util.ArrayList;
 import java.util.List;
-import kpan.not_enough_oxygen.block.BlockElementSolid;
+import kpan.not_enough_oxygen.neo_world.WeightedList;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -14,33 +14,10 @@ public class NEOBiomes {
     public static final List<NEOBiome> BIOMES_NORMAL = new ArrayList<>();
     public static final List<NEOBiome> BIOMES_NEAR = new ArrayList<>();
     public static final List<NEOBiome> BIOMES_FAR = new ArrayList<>();
-    private static byte nextBiomeId = 0;
 
-    public static NEOBiome TEMPERATE = new NEOBiome(null, nextBiomeId++, true, false) {
-        @Override
-        public WeightedList<IBlockState> getBiomeBlockList() {
-            WeightedList<IBlockState> res = new WeightedList<>();
-            res.add(0.3F, Blocks.JUNGLE_FENCE.getDefaultState());
-            res.add(0.1F, BlockElementSolid.get(Elements.ALGAE).getDefaultState());
-            res.add(0.2F, BlockElementSolid.get(Elements.COAL).getDefaultState());
-            res.add(0.3F, BlockElementSolid.get(Elements.COPPER_ORE).getDefaultState());
-            res.add(0.8F, BlockElementSolid.get(Elements.SANDSTONE).getDefaultState());
-            res.add(0.3F, BlockElementSolid.get(Elements.ALGAE).getDefaultState());
-            res.add(0.3F, BlockElementSolid.get(Elements.DIRT).getDefaultState());
-            res.add(0.65F, BlockElementSolid.get(Elements.SANDSTONE).getDefaultState());
-            res.add(0.2F, BlockElementSolid.get(Elements.DIRT).getDefaultState());
-            res.add(0.1F, BlockElementSolid.get(Elements.COAL).getDefaultState());
-            res.add(0.1F, BlockElementSolid.get(Elements.SAND).getDefaultState());
-            res.add(0.1F, BlockElementSolid.get(Elements.DIRT).getDefaultState());
-            res.add(0.2F, BlockElementSolid.get(Elements.COPPER_ORE).getDefaultState());
-            res.add(0.1F, BlockElementSolid.get(Elements.COAL).getDefaultState());
-            res.add(0.1F, BlockElementSolid.get(Elements.ALGAE).getDefaultState());
-            res.add(0.05F, BlockElementSolid.get(Elements.OXYLITE).getDefaultState());
-            res.add(0.2F, Blocks.WEB.getDefaultState());
-            return res;
-        }
-    };
-    public static NEOBiome MAGMA = new NEOBiome(null, nextBiomeId++, true, true) {
+    public static NEOBiome TEMPERATE = new NEOBiomeTemperate();
+
+    public static NEOBiome MAGMA = new NEOBiome(true, true) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();
@@ -48,7 +25,7 @@ public class NEOBiomes {
             return res;
         }
     };
-    public static NEOBiome OIL = new NEOBiome(null, nextBiomeId++, true, true) {
+    public static NEOBiome OIL = new NEOBiome(true, true) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();
@@ -56,7 +33,7 @@ public class NEOBiomes {
             return res;
         }
     };
-    public static NEOBiome SPACE = new NEOBiome(null, nextBiomeId++, true, true) {
+    public static NEOBiome SPACE = new NEOBiome(true, true) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();
@@ -64,7 +41,7 @@ public class NEOBiomes {
             return res;
         }
     };
-    public static NEOBiome MARSH = new NEOBiome(null, nextBiomeId++, false, false) {
+    public static NEOBiome MARSH = new NEOBiome(false, false) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();
@@ -72,7 +49,7 @@ public class NEOBiomes {
             return res;
         }
     };
-    public static NEOBiome JUNGLE = new NEOBiome(null, nextBiomeId++, false, false) {
+    public static NEOBiome JUNGLE = new NEOBiome(false, false) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();
@@ -88,7 +65,7 @@ public class NEOBiomes {
             return res;
         }
     };
-    public static NEOBiome FROZEN = new NEOBiome(null, nextBiomeId++, false, true) {
+    public static NEOBiome FROZEN = new NEOBiome(false, true) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();
@@ -96,7 +73,7 @@ public class NEOBiomes {
             return res;
         }
     };
-    public static NEOBiome TIDE_POOL = new NEOBiome(null, nextBiomeId++, false, true) {
+    public static NEOBiome TIDE_POOL = new NEOBiome(false, true) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();
@@ -104,7 +81,7 @@ public class NEOBiomes {
             return res;
         }
     };
-    public static NEOBiome WHITE = new NEOBiome(null, nextBiomeId++, false, true) {
+    public static NEOBiome WHITE = new NEOBiome(false, true) {
         @Override
         public WeightedList<IBlockState> getBiomeBlockList() {
             WeightedList<IBlockState> res = new WeightedList<>();

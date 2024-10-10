@@ -1,13 +1,15 @@
 package kpan.not_enough_oxygen.neo_world;
 
-import java.util.HashMap;
+import io.netty.util.collection.IntObjectHashMap;
+import io.netty.util.collection.IntObjectMap;
+import io.netty.util.collection.IntObjectMap.PrimitiveEntry;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import kpan.not_enough_oxygen.neo_world.ElementData.ElementState;
 import kpan.not_enough_oxygen.util.MyNBTUtil;
+import kpan.not_enough_oxygen.util.MyNBTUtil.EnumNBTTagType;
 import kpan.not_enough_oxygen.util.MyNBTUtil.NBTException;
 import kpan.not_enough_oxygen.world.NEOWorldProvider;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,11 +41,16 @@ public final class SimulationFrame {
 
     public static final class AreaData {
 
-        public static AreaData fromNBT(NBTTagCompound areaData) {
-            int sizeX;
-            int sizeZ;
-            Cell[] cells;
-            boolean[] explored;
+        public static AreaData fromNBT(NBTTagCompound nbt) throws NBTException {
+            int sizeX = MyNBTUtil.readNumberInt(nbt, "sizeX");
+            int sizeZ = MyNBTUtil.readNumberInt(nbt, "sizeZ");
+            NBTTagList list = nbt.getTagList("cells", EnumNBTTagType.COMPOUND.getId());
+            Cell[] cells = new Cell[list.tagCount()];
+            for (int i = 0; i < cells.length; i++) {
+                cells[i] = Cell.fromNBT(list.getCompoundTagAt(i));
+            }
+            boolean[] explored = MyNBTUtil.readBooleanArray(nbt, "explored");
+            return new AreaData(sizeX, sizeZ, cells, explored);
         }
 
         public final int sizeX;
@@ -51,21 +58,24 @@ public final class SimulationFrame {
         private final Cell[] cells;
         private final boolean[] explored;
 
-        private final Map<Integer, Cell> updatedCells = new HashMap<>();
+        private final IntObjectMap<Cell> updatedCells = new IntObjectHashMap<>();
         private final Set<Integer> newlyExplored = new HashSet<>();
 
         public AreaData(int sizeX, int sizeZ) {
             this(sizeX, sizeZ, new Cell[sizeX * NEOWorldProvider.WORLD_HEIGHT * sizeZ]);
         }
-
         public AreaData(int sizeX, int sizeZ, Cell[] cells) {
+            this(sizeX, sizeZ, cells, new boolean[cells.length]);
+        }
+        private AreaData(int sizeX, int sizeZ, Cell[] cells, boolean[] explored) {
             this.sizeX = sizeX;
             this.sizeZ = sizeZ;
             this.cells = cells;
-            explored = new boolean[cells.length];
+            this.explored = explored;
         }
+
         public boolean isExplored(int cellIdx) {
-            return explored[cellIdx];
+            return explored[cellIdx] || true;
         }
 
         public Cell getCellReadOnly(int idx) {
@@ -78,6 +88,12 @@ public final class SimulationFrame {
             if (idx < 0 || idx >= cells.length)
                 return Cell.INVALID.clone();
             return cells[idx];
+        }
+
+        public void setCellForGeneration(int x, int y, int z, Cell cell) {
+            int idx = toCellIdx(x, y, z);
+            if (idx >= 0 && idx < cells.length)
+                cells[idx] = cell;
         }
 
         // 実際に移動したmass
@@ -149,6 +165,9 @@ public final class SimulationFrame {
                     return false;
             }
 
+            // TODO:spawnFalling実装
+            if (true)
+                return false;
             spawnFalling(cell, spawnCellIdx);
             cell.setAsVacuum();
             return true;
@@ -261,6 +280,13 @@ public final class SimulationFrame {
 
         public int toCellIdx(int x, int y, int z) {
             return (x * sizeZ + z) * NEOWorldProvider.WORLD_HEIGHT + y;
+        }
+
+        public void applyUpdate() {
+            for (PrimitiveEntry<Cell> entry : updatedCells.entries()) {
+                entry.value().copyTo(cells[entry.key()]);
+            }
+            updatedCells.clear();
         }
 
         public NBTTagCompound toNBT() {

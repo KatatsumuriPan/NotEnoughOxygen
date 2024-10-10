@@ -1,14 +1,14 @@
 package kpan.not_enough_oxygen.neo_world;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import kpan.not_enough_oxygen.neo_world.ElementData.EnumLightEmittion;
 import kpan.not_enough_oxygen.neo_world.ElementSolid.EnumHardness;
 
 public class Elements {
 
-    public static final List<ElementData<?>> ELEMENTS = new ArrayList<>();
+    public static final Map<String, ElementData<?>> ELEMENTS = new HashMap<>();
 
     public static final ElementData<?> VACUUM = ElementData.VACUUM;
     public static final ElementSolid NEUTRONIUM = solid("neutronium", Color.black, 0, Float.POSITIVE_INFINITY, EnumHardness.UNBREAKABLE).radiationAbsorption(0.9F);

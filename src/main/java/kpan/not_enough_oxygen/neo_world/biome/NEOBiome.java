@@ -1,7 +1,8 @@
-package kpan.not_enough_oxygen.neo_world;
+package kpan.not_enough_oxygen.neo_world.biome;
 
 import java.util.Random;
-import kpan.not_enough_oxygen.world.NEOMCChunkGenerator;
+import kpan.not_enough_oxygen.neo_world.WeightedList;
+import kpan.not_enough_oxygen.world.NEOChunkGenerator;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.MathHelper;
@@ -10,14 +11,12 @@ import net.minecraft.world.chunk.ChunkPrimer;
 public abstract class NEOBiome {
 
     protected static int range = 4;
-    public final ElementData baseRock;
     public final byte biomeId;
     public final boolean isSpecial;
     public final boolean farFromSpawn;
 
-    public NEOBiome(ElementData baseRock, byte biomeId, boolean isSpecial, boolean farFromSpawn) {
-        this.baseRock = baseRock;
-        this.biomeId = biomeId;
+    public NEOBiome(boolean isSpecial, boolean farFromSpawn) {
+        biomeId = (byte) NEOBiomes.BIOMES.size();
         this.isSpecial = isSpecial;
         this.farFromSpawn = farFromSpawn;
         NEOBiomes.BIOMES.add(this);
@@ -85,7 +84,7 @@ public abstract class NEOBiome {
                         double dz = (z + 0.5D - digCenterZ) / r;
                         if (dx * dx + dz * dz < 1.0D) {
                             for (int y = ey; y > sy; --y) {
-                                if (!NEOMCChunkGenerator.isInGame(x, y, z))
+                                if (!NEOChunkGenerator.isInGame(x, y, z))
                                     continue;
                                 double dy = ((y - 1) + 0.5D - digCenterY) / h;
                                 if (dy > -0.7D && dx * dx + dy * dy + dz * dz < 1.0D) {
