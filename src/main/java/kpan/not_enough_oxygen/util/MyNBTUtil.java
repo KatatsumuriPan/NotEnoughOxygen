@@ -1,6 +1,5 @@
 package kpan.not_enough_oxygen.util;
 
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -176,6 +175,13 @@ public class MyNBTUtil {
             writeNull(compound, name);
         return compound;
     }
+    public static NBTTagCompound write(NBTTagCompound compound, String name, boolean[] value) {
+        byte[] byteArr = new byte[value.length];
+        for (int i = 0; i < value.length; i++) {
+            byteArr[i] = (byte) (value[i] ? 1 : 0);
+        }
+        return write(compound, name, byteArr);
+    }
     public static NBTTagCompound write(NBTTagCompound compound, String name, int[] value) {
         compound.setIntArray(name, value);
         return compound;
@@ -202,11 +208,23 @@ public class MyNBTUtil {
         else
             return defaultValue;
     }
-    public static int readNumberInt(NBTTagCompound compound, String name) throws NBTException {
+    public static Byte tryReadNumberByte(NBTTagCompound compound, String name) {
         if (hasKeyNumber(compound, name))
-            return compound.getInteger(name);
+            return compound.getByte(name);
+        else
+            return null;
+    }
+    public static byte readNumberByte(NBTTagCompound compound, String name) throws NBTException {
+        if (hasKeyNumber(compound, name))
+            return compound.getByte(name);
         else
             throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+    }
+    public static byte readNumberByte(NBTTagCompound compound, String name, byte defaultValue) {
+        if (hasKeyNumber(compound, name))
+            return compound.getByte(name);
+        else
+            return defaultValue;
     }
     public static Integer tryReadNumberInt(NBTTagCompound compound, String name) {
         if (hasKeyNumber(compound, name))
@@ -214,17 +232,17 @@ public class MyNBTUtil {
         else
             return null;
     }
+    public static int readNumberInt(NBTTagCompound compound, String name) throws NBTException {
+        if (hasKeyNumber(compound, name))
+            return compound.getInteger(name);
+        else
+            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+    }
     public static int readNumberInt(NBTTagCompound compound, String name, int defaultValue) {
         if (hasKeyNumber(compound, name))
             return compound.getInteger(name);
         else
             return defaultValue;
-    }
-    public static long readNumberLong(NBTTagCompound compound, String name) throws NBTException {
-        if (hasKeyNumber(compound, name))
-            return compound.getLong(name);
-        else
-            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
     }
     public static Long tryReadNumberLong(NBTTagCompound compound, String name) {
         if (hasKeyNumber(compound, name))
@@ -232,9 +250,33 @@ public class MyNBTUtil {
         else
             return null;
     }
+    public static long readNumberLong(NBTTagCompound compound, String name) throws NBTException {
+        if (hasKeyNumber(compound, name))
+            return compound.getLong(name);
+        else
+            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+    }
     public static long readNumberLong(NBTTagCompound compound, String name, long defaultValue) {
         if (hasKeyNumber(compound, name))
             return compound.getLong(name);
+        else
+            return defaultValue;
+    }
+    public static Float tryReadNumberFloat(NBTTagCompound compound, String name) {
+        if (hasKeyNumber(compound, name))
+            return compound.getFloat(name);
+        else
+            return null;
+    }
+    public static float readNumberFloat(NBTTagCompound compound, String name) throws NBTException {
+        if (hasKeyNumber(compound, name))
+            return compound.getFloat(name);
+        else
+            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+    }
+    public static float readNumberFloat(NBTTagCompound compound, String name, float defaultValue) {
+        if (hasKeyNumber(compound, name))
+            return compound.getFloat(name);
         else
             return defaultValue;
     }
@@ -251,9 +293,11 @@ public class MyNBTUtil {
         else
             return defaultValue;
     }
-    @Nullable
-    public static String readString(NBTTagCompound compound, String name) {
-        return readString(compound, name, null);
+    public static String readString(NBTTagCompound compound, String name) throws NBTException {
+        String res = readString(compound, name, null);
+        if (res == null)
+            throw new NBTException("Value of \"" + name + "\" is not valid!\n" + compound);
+        return res;
     }
     public static String readString(NBTTagCompound compound, String name, String defaultValue) {
         if (hasKey(compound, name, EnumNBTTagType.STRING))
@@ -277,6 +321,20 @@ public class MyNBTUtil {
     public static AxisAlignedBB readAABB(NBTTagCompound compound, String name, AxisAlignedBB defaultValue) {
         NBTBase nbt = compound.getTag(name);
         return getAABBformTag(nbt, defaultValue);
+    }
+    public static boolean[] readBooleanArray(NBTTagCompound compound, String name) throws NBTException {
+        if (!hasKey(compound, name, EnumNBTTagType.BYTE_ARRAY)) {
+            if (!compound.hasKey(name))
+                throw new NBTException("\"" + name + "\" is not found!\n" + compound);
+            else
+                throw new NBTException("\"" + name + "\" is byte array!\n" + compound);
+        }
+        byte[] byteArr = compound.getByteArray(name);
+        boolean[] res = new boolean[byteArr.length];
+        for (int i = 0; i < byteArr.length; i++) {
+            res[i] = byteArr[i] != 0;
+        }
+        return res;
     }
 
     public static NBTBase toNBT(@Nullable Object object) {
@@ -401,7 +459,6 @@ public class MyNBTUtil {
     }
 
     public static class NBTException extends Exception {
-        @Serial
         private static final long serialVersionUID = -2047511212572346871L;
         public NBTException(String message) {
             super(message);
